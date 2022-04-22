@@ -22,16 +22,17 @@ async def on_message(message):
   if message.author == client.user:
     return
 
-  msg = message.content
-  location = msg.replace(command_prefix,"").lower()
-  if len(location)>=1:
-    url = f'https://api.openweathermap.org/data/2.5/weather?q={location}&appid={os.getenv("api_key")}&units=metric'
-    try :
-      data = json.loads(requests.get(url).content)
-      data = parse_data(data)
-      await message.channel.send(embed = weather_message(data, location))
-    except KeyError:
-      await message.channel.send(embed = error_message(location))
+  if message.content.startswith(command_prefix):
+     msg = message.content
+     location = msg.replace(command_prefix,"").lower()
+     if len(location)>=1:
+     url = f'https://api.openweathermap.org/data/2.5/weather?q={location}&appid={os.getenv("api_key")}&units=metric'
+     try :
+       data = json.loads(requests.get(url).content)
+       data = parse_data(data)
+       await message.channel.send(embed = weather_message(data, location))
+     except KeyError:
+       await message.channel.send(embed = error_message(location))
       
     
 
