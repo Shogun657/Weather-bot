@@ -22,7 +22,7 @@ async def on_message(message):
   if message.author == client.user:
     return
 
-  if message.content.startswith(command_prefix):
+  if message.content.startswith('w.'):
      msg = message.content
      location = msg.replace(command_prefix,"").lower()
      if len(location)>=1:
@@ -33,7 +33,8 @@ async def on_message(message):
        await message.channel.send(embed = weather_message(data, location))
      except KeyError:
        await message.channel.send(embed = error_message(location))
-      
+   else:
+      return
     
 
 client.run(os.getenv('TOKEN'))
