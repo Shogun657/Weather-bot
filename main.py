@@ -24,6 +24,7 @@ async def on_message(message):
 
   msg = message.content
   location = msg.replace(command_prefix,"").lower()
+  location = msg.lstrip(location)
   if len(location)>=1:
     url = f'https://api.openweathermap.org/data/2.5/weather?q={location}&appid={os.getenv("api_key")}&units=metric'
     try :
